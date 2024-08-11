@@ -7,16 +7,17 @@ import {
   ActorsInfo,
   Navbar,
 } from "./index";
-
-import "./styles.css";
+import useStyles from "./styles";
 
 function App() {
+  const classes = useStyles();
+
   return (
-    <div className="root">
+    <div className={classes.root}>
       <CssBaseline />
       <Navbar />
-      <main className="content">
-        <div className="toolbar">
+      <main className={classes.toolbar}>
+        <div className={classes.content}>
           <Routes>
             <Route path="/" element={<MoviesPage />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
