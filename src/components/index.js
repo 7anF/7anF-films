@@ -6,6 +6,7 @@ import Navbar from "./Navbar/Navbar";
 import Sidebar from "./Sidebar/Sidebar";
 import MovieList from "./MovieList/MovieList";
 import Movie from "./Movie/Movie";
+import Search from "./Search/Search";
 
 export {
   MoviesPage,
@@ -16,4 +17,5 @@ export {
   Sidebar,
   MovieList,
   Movie,
+  Search,
 };
