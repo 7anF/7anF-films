@@ -10,6 +10,6 @@ export default makeStyles(() => ({
   },
   content: {
     flexGrow: "1",
-    padding: "6em", // 2em
+    padding: "6em 2em", // 2em
   },
 }));
