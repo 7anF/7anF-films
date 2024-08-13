@@ -13,8 +13,8 @@ const MoviesPage = () => {
 
   if (isFetching) {
     return (
-      <Box display="flex" justifyContent="center">
-        <CircularProgress />
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <CircularProgress size="64px" />
       </Box>
     );
   }
