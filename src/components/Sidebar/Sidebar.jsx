@@ -42,6 +42,9 @@ const Sidebar = ({ setMobileOpen }) => {
   const classes = useStyles();
   const { data, isFetching } = useGetGenresQuery();
   const dispatch = useDispatch();
+  const { genreOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
 
   return (
     <>
@@ -74,7 +77,7 @@ const Sidebar = ({ setMobileOpen }) => {
         <ListSubheader>Genres</ListSubheader>
         {isFetching ? (
           <Box display="flex" justifyContent="center" alignItems="center">
-            <CircularProgress size="64px" />
+            <CircularProgress />
           </Box>
         ) : (
           data.genres.map(({ name, id }) => (

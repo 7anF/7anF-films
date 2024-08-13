@@ -4,17 +4,27 @@ import {
   useMediaQuery,
   Typography,
 } from "@mui/material";
+
 import { useSelector } from "react-redux";
 import { useGetMoviesQuery } from "../../services/TMDB";
 import { MovieList } from "..";
+import { selectGenreOrCategory } from "../../features/currentGenreOrCategory";
+import { useState } from "react";
 
 const MoviesPage = () => {
-  const { data, error, isFetching } = useGetMoviesQuery();
+  const [page, setPage] = useState(1);
+  const { genreOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
+  const { data, error, isFetching } = useGetMoviesQuery({
+    genreOrCategoryName,
+    page,
+  });
 
   if (isFetching) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center">
-        <CircularProgress size="64px" />
+      <Box display="flex" justifyContent="center">
+        <CircularProgress size="4em" />
       </Box>
     );
   }
