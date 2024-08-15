@@ -14,7 +14,7 @@ import {
   Brightness7,
 } from "@mui/icons-material";
 import { useTheme } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useStyles from "./styles";
 import { useEffect, useState } from "react";
 import { Sidebar, Search } from "../index";
@@ -31,6 +31,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("request_token");
   const sessionId = localStorage.getItem("session_id");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const logInUser = async () => {
@@ -51,6 +52,7 @@ const Navbar = () => {
     };
 
     logInUser();
+    navigate("/");
   }, [token]);
 
   return (

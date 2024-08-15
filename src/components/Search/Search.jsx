@@ -11,6 +11,7 @@ const Search = () => {
   const classes = useStyles();
   const [query, setQuery] = useState("");
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ const Search = () => {
     setQuery("");
   };
 
+  if (location.pathname !== "/") return null;
   return (
     <form className={classes.searchContainer} onSubmit={handleSubmit}>
       <TextField

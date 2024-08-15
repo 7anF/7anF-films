@@ -17,7 +17,6 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       margin: "0 auto",
       width: "50%",
-      height: "350px",
     },
     [theme.breakpoints.down("sm")]: {
       margin: "0 auto",
@@ -69,7 +68,7 @@ export default makeStyles((theme) => ({
   videos: {
     width: "50%",
     height: "50%",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       width: "90%",
       height: "90%",
     },
