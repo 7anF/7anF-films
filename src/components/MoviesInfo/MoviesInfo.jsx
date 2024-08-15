@@ -25,32 +25,87 @@ import { MovieList } from "../index";
 
 import { Link, useParams } from "react-router-dom";
 import {
+  useGetListQuery,
   useGetMovieQuery,
   useGetRecommendationsQuery,
 } from "../../services/TMDB";
 import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectGenreOrCategory } from "../../features/currentGenreOrCategory";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { userSelector } from "../../features/auth";
+
+var tmdbApiKey = import.meta.env.VITE_REACT_APP_TMDB_KEY;
 
 const MoviesInfo = () => {
-  const { id } = useParams();
-  const [open, setOpen] = useState(false);
-  const { data: recommendations, isFetching: isRecommendationsFetching } =
-    useGetRecommendationsQuery({
-      list: "recommendations",
-      movie_id: id,
-    });
-  const { data, isFetching, error } = useGetMovieQuery(id);
   const classes = useStyles();
+  const { id } = useParams();
   const dispatch = useDispatch();
+  const { user } = useSelector(userSelector);
+  const { data: favoriteMovies, refetch: refetchFavorites } = useGetListQuery({
+    listName: "favorite/movies",
+    accountId: user.id,
+    sessionId: localStorage.getItem("session_id"),
+    page: 1,
+  });
+  const { data: watchListMovie, refetch: refetchWatchListed } = useGetListQuery(
+    {
+      listName: "watchlist/movies",
+      accountId: user.id,
+      sessionId: localStorage.getItem("session_id"),
+      page: 1,
+    }
+  );
+  const { data: recommendations } = useGetRecommendationsQuery({
+    list: "recommendations",
+    movie_id: id,
+  });
+  const { data, isFetching, error } = useGetMovieQuery(id);
+  const [open, setOpen] = useState(false);
+  const [isMovieFavorited, setIsMovieFavorited] = useState(false);
+  const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
 
-  const isMovieFavorites = true;
-  const isMovieWatchlist = true;
+  useEffect(() => {
+    refetchFavorites();
+    refetchWatchListed();
+  }, [isMovieFavorited, isMovieWatchlisted]);
 
-  const addToFavorites = () => {};
+  useEffect(() => {
+    setIsMovieFavorited(
+      !!favoriteMovies?.results?.find((movie) => movie?.id === data?.id)
+    );
+  }, [favoriteMovies, data]);
 
-  const addToWatchlist = () => {};
+  useEffect(() => {
+    setIsMovieWatchlisted(
+      !!watchListMovie?.results?.find((movie) => movie?.id === data?.id)
+    );
+  }, [watchListMovie, data]);
+
+  const addToFavorites = async () => {
+    await axios.post(
+      `https://api.themoviedb.org/3/account/${
+        user.id
+      }/favorite?api_key=${tmdbApiKey}&session_id=${localStorage.getItem(
+        "session_id"
+      )}`,
+      { media_type: "movie", media_id: id, favorite: !isMovieFavorited }
+    );
+    setIsMovieFavorited((prev) => !prev);
+  };
+
+  const addToWatchlist = async () => {
+    await axios.post(
+      `https://api.themoviedb.org/3/account/${
+        user.id
+      }/watchlist?api_key=${tmdbApiKey}&session_id=${localStorage.getItem(
+        "session_id"
+      )}`,
+      { media_type: "movie", media_id: id, watchlist: !isMovieWatchlisted }
+    );
+    setIsMovieWatchlisted((prev) => !prev);
+  };
+
   if (isFetching)
     return (
       <Box display="flex" justifyContent="center" alignItems="center">
@@ -185,14 +240,14 @@ const MoviesInfo = () => {
                 <Button
                   onClick={addToFavorites}
                   endIcon={
-                    isMovieFavorites ? <FavoriteBorderOutlined /> : <Favorite />
+                    isMovieFavorited ? <FavoriteBorderOutlined /> : <Favorite />
                   }
                 >
-                  {isMovieFavorites ? "Unfavorite" : "Favorite"}
+                  {isMovieFavorited ? "Unfavorite" : "Favorite"}
                 </Button>
                 <Button
                   onClick={addToWatchlist}
-                  endIcon={isMovieWatchlist ? <Remove /> : <PlusOne />}
+                  endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}
                 >
                   Watchlist
                 </Button>

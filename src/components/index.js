@@ -8,6 +8,7 @@ import MovieList from "./MovieList/MovieList";
 import Movie from "./Movie/Movie";
 import Search from "./Search/Search";
 import Pagination from "./Pagination/Pagination";
+import RatedCard from "./RatedCard/RatedCard";
 
 export {
   MoviesPage,
@@ -20,4 +21,5 @@ export {
   Movie,
   Search,
   Pagination,
+  RatedCard,
 };
