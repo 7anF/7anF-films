@@ -16,12 +16,12 @@ function App() {
     <div className={classes.root}>
       <CssBaseline />
       <Navbar />
-      <main className={classes.toolbar}>
-        <div className={classes.content}>
+      <main className={classes.content}>
+        <div className={classes.toolbar}>
           <Routes>
             <Route path="/" element={<MoviesPage />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
-            <Route path="/movies/:id" element={<MoviesInfo />} />
+            <Route path="/movie/:id" element={<MoviesInfo />} />
             <Route path="/actors/:id" element={<ActorsInfo />} />
           </Routes>
         </div>
