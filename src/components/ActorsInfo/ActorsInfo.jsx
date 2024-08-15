@@ -8,7 +8,7 @@ import {
   useGetActorMoviesQuery,
 } from "../../services/TMDB.js";
 import useStyles from "./styles.js";
-import { MovieList } from "..";
+import { MovieList, Pagination } from "..";
 
 const ActorsInfo = () => {
   const [page, setPage] = useState(1);
@@ -89,6 +89,11 @@ const ActorsInfo = () => {
         ) : (
           <Typography>No other movies of that actor</Typography>
         )}
+        <Pagination
+          currentPage={page}
+          setPage={setPage}
+          totalPages={movies?.total_pages}
+        />
       </Box>
     </>
   );
