@@ -10,8 +10,8 @@ import {
 import {
   Menu,
   AccountCircle,
-  Brightness4,
-  Brightness7,
+  WbSunny,
+  NightlightRound,
 } from "@mui/icons-material";
 import { useTheme } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
@@ -78,7 +78,7 @@ const Navbar = () => {
             sx={{ ml: 1 }}
             onClick={colorMode.toggleColorMode}
           >
-            {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
+            {theme.palette.mode === "dark" ? <NightlightRound /> : <WbSunny />}
           </IconButton>
           {!isMobile && <Search />}
           <div>
