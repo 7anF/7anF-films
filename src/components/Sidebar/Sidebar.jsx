@@ -46,7 +46,11 @@ const Sidebar = ({ setMobileOpen }) => {
   return (
     <>
       <Link to="/" className={classes.imageLink}>
-        <img src={blueLogo} alt="Filmpire logo" className={classes.image} />
+        {theme.palette.mode === "dark" ? (
+          <img src={redLogo} alt="Filmpire logo" className={classes.image} />
+        ) : (
+          <img src={blueLogo} alt="Filmpire logo" className={classes.image} />
+        )}
       </Link>
       <Divider />
       <List>

@@ -34,11 +34,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectGenreOrCategory } from "../../features/currentGenreOrCategory";
 import { useEffect, useState } from "react";
 import { userSelector } from "../../features/auth";
+import { useTheme } from "@mui/styles";
 
 var tmdbApiKey = import.meta.env.VITE_REACT_APP_TMDB_KEY;
 
 const MoviesInfo = () => {
   const classes = useStyles();
+  const theme = useTheme();
   const { id } = useParams();
   const dispatch = useDispatch();
   const { user } = useSelector(userSelector);
@@ -164,7 +166,10 @@ const MoviesInfo = () => {
                 className={classes.genreImage}
                 height={30}
               />
-              <Typography color="black" variant="subtitle1">
+              <Typography
+                color={theme.palette.mode === "dark" ? "white" : "black"}
+                variant="subtitle1"
+              >
                 {genre?.name}
               </Typography>
             </Link>
@@ -197,7 +202,13 @@ const MoviesInfo = () => {
                         src={`https://image.tmdb.org/t/p/w500/${character?.profile_path}`}
                         alt={character?.name}
                       />
-                      <Typography color="black">{character?.name}</Typography>
+                      <Typography
+                        color={
+                          theme.palette.mode === "dark" ? "white" : "black"
+                        }
+                      >
+                        {character?.name}
+                      </Typography>
                       <Typography color="gray">
                         {character?.character.split("/")[0]}
                       </Typography>
